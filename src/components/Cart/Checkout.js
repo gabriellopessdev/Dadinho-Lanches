@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import InputMask from 'react-input-mask';
 
 const isEmpty = value => value.trim() === '';
-const isPostalCodeValid = value => /^\d{5}-\d{3}$/.test(value); // CEP no formato XXXXX-XXX
+const isPostalCodeValid = value => /^\d{5}-\d{3}$/.test(value); // Validação para CEP brasileiro no formato XXXXX-XXX
 
 const Checkout = (props) => {
     const [formInputsValidity, setFormInputsValidity] = useState({
@@ -26,20 +26,20 @@ const Checkout = (props) => {
         const enteredCity = cityInputRef.current.value;
 
         const enteredNameIsValid = !isEmpty(enteredName);
-        const enteredSteetIsValid = !isEmpty(enteredStreet);
+        const enteredStreetIsValid = !isEmpty(enteredStreet);
         const enteredCityIsValid = !isEmpty(enteredCity);
         const enteredPostalCodeIsValid = isPostalCodeValid(enteredPostalCode);
 
         setFormInputsValidity({
             name: enteredNameIsValid,
-            street: enteredSteetIsValid,
+            street: enteredStreetIsValid,
             city: enteredCityIsValid,
             postalCode: enteredPostalCodeIsValid
         });
 
         const formIsValid = 
             enteredNameIsValid &&
-            enteredSteetIsValid &&
+            enteredStreetIsValid &&
             enteredCityIsValid && 
             enteredPostalCodeIsValid;
 
@@ -80,10 +80,12 @@ const Checkout = (props) => {
                 <label htmlFor='postal'>CEP</label>
                 <InputMask
                     mask="99999-999"
-                    maskChar={null}
+                    maskChar=""
                     id='postal'
                     ref={postalCodeInputRef}
-                />
+                >
+                    {(inputProps) => <input {...inputProps} type="text" />}
+                </InputMask>
                 {!formInputsValidity.postalCode && <p>Por favor informe um CEP válido</p>}
             </div>
             <div className={cityControlClasses}>
