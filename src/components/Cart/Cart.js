@@ -27,7 +27,7 @@ export default function Cart (props) {
     }
 
     const submitOrderHandler = async(userData) => {
-       await fetch('https://projeto-novo-1552130917101-default-rtdb.firebaseio.com/orders.json', {
+       await fetch('https://dadinho-lanches-default-rtdb.firebaseio.com/orders.json', {
         method: 'POST',
         body: JSON.stringify({
             user:userData,
